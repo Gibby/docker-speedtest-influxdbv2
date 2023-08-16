@@ -112,7 +112,7 @@ def speedtest():
     if sleepy_time_random is True:
         sleepy_time_start = sleepy_time * 0.2
         sleepy_time_end = sleepy_time * 1.2
-        sleepy_time_do = random.randint(sleepy_time_start, sleepy_time_end) # nosec B311
+        sleepy_time_do = random.randint(sleepy_time_start, sleepy_time_end)  # nosec B311
     else:
         sleepy_time_do = sleepy_time
     print("STATE: Sleeping for", sleepy_time_do, "seconds")
