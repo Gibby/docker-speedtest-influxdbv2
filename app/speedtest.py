@@ -8,6 +8,7 @@ import time
 import socket
 import sys
 from influxdb_client import InfluxDBClient
+import random
 
 # Variables
 influxdb_scheme = os.getenv("INFLUXDB_SCHEME", "http")
@@ -19,6 +20,7 @@ influxdb_token = os.getenv("INFLUXDB_TOKEN")
 influxdb_org = os.getenv("INFLUXDB_ORG", "-")
 influxdb_db = os.getenv("INFLUXDB_DB")
 sleepy_time = int(os.getenv("SLEEPY_TIME", 3600))
+sleepy_time_random = bool(os.getenv("SLEEPY_TIME_TRUE", False))
 start_time = datetime.datetime.utcnow().isoformat()
 default_hostname = socket.gethostname()
 hostname = os.getenv("SPEEDTEST_HOST", default_hostname)
@@ -106,7 +108,12 @@ def speedtest():
         except Exception as err:
             print("ERROR: Error writing to database")
             print(err)
-
+    if sleepy_time_random is True:
+        sleepy_time_start = sleepy_time * 0.2
+        sleepy_time_end = sleepy_time * 1.2
+        sleepy_time = random.randint(sleepy_time_start, sleepy_time_end)
+        print("STATE: Sleeping for", sleepy_time, "seconds")
+        time.sleep(sleepy_time)
     print("STATE: Sleeping for", sleepy_time, "seconds")
     time.sleep(sleepy_time)
 
