@@ -6,12 +6,12 @@ https://github.com/influxdata/telegraf/tree/master/plugins/inputs/internet_speed
 
 # docker-speedtest-influxdbv2
 
-[![CI/CD](https://github.com/loganmarchione/docker-speedtest-influxdbv2/actions/workflows/main.yml/badge.svg)](https://github.com/loganmarchione/docker-speedtest-influxdbv2/actions/workflows/main.yml)
-[![Docker Image Size (latest semver)](https://img.shields.io/docker/image-size/loganmarchione/docker-speedtest-influxdbv2)](https://hub.docker.com/r/loganmarchione/docker-speedtest-influxdbv2)
+[![CI/CD](https://github.com/gibby/docker-speedtest-influxdbv2/actions/workflows/main.yml/badge.svg)](https://github.com/gibby/docker-speedtest-influxdbv2/actions/workflows/main.yml)
+[![Docker Image Size (latest semver)](https://img.shields.io/docker/image-size/gibby/docker-speedtest-influxdbv2)](https://hub.docker.com/r/gibby/docker-speedtest-influxdbv2)
 
 Runs Ookla's [Speedtest CLI](https://www.speedtest.net/apps/cli) program in Docker, sends the results to InfluxDB
-  - Source code: [GitHub](https://github.com/loganmarchione/docker-speedtest-influxdbv2)
-  - Docker container: [Docker Hub](https://hub.docker.com/r/loganmarchione/docker-speedtest-influxdbv2)
+  - Source code: [GitHub](https://github.com/gibby/docker-speedtest-influxdbv2)
+  - Dockerhub container: [Docker Hub](https://hub.docker.com/r/gibby/docker-speedtest-influxdbv2)
   - Image base: [Python (slim Buster)](https://hub.docker.com/_/python)
   - Init system: N/A
   - Application: [Speedtest CLI](https://www.speedtest.net/apps/cli)
@@ -62,6 +62,7 @@ speedtest: 225MB / 495MB
 | INFLUXDB_ORG     | Yes (only for v2)          | Organization                                   | my_test_org                                 |                                                                                                     |
 | INFLUXDB_DB      | Yes                        | Database name                                  | SpeedtestStats                              | Must already be created. In InfluxDBv2, this is the "bucket".                                       |
 | SLEEPY_TIME      | No (default: 3600)         | Seconds to sleep between runs                  | 3600                                        | The loop takes about 15-30 seconds to run, so I wouldn't set this value any lower than 60 (1min)    |
+| SLEEPY_TIME_RANDOM | No (default: false) | Randomizes the sleepy time +/- 20% | true | Useful when running as a daemon set
 | SPEEDTEST_HOST   | No (default: container ID) | Hostname of service where Speedtest is running | server04                                    | Useful if you're running Speedtest on multiple servers                                              |
 | SPEEDTEST_SERVER | No (default: random)       | ID number of Speedtest server                  | 41817                                       | See a list of servers and IDs [here](https://c.speedtest.net/speedtest-servers-static.php)          |
 
@@ -91,7 +92,7 @@ services:
       - SPEEDTEST_SERVER=41817
     networks:
       - speedtest2
-    image: loganmarchione/docker-speedtest-influxdbv2:latest
+    image: gibby/docker-speedtest-influxdbv2:latest
 
 networks:
   speedtest2:
@@ -116,7 +117,7 @@ services:
       - SPEEDTEST_SERVER=41817
     networks:
       - speedtest1
-    image: loganmarchione/docker-speedtest-influxdbv2:latest
+    image: gibby/docker-speedtest-influxdbv2:latest
 
 networks:
   speedtest1:

@@ -3,8 +3,8 @@ FROM python:3.8-slim-bullseye
 ARG BUILD_DATE
 
 LABEL \
-  maintainer="Logan Marchione <logan@loganmarchione.com>" \
-  org.opencontainers.image.authors="Logan Marchione <logan@loganmarchione.com>" \
+  maintainer="Gibby <gibby@twoitguys.com>" \
+  org.opencontainers.image.authors="Gibby <gibby@twoitguys.com>" \
   org.opencontainers.image.title="docker-speedtest-influxdb" \
   org.opencontainers.image.description="Runs Ookla's Speedtest CLI program in Docker, sends the results to InfluxDB" \
   org.opencontainers.image.created=$BUILD_DATE
@@ -27,12 +27,8 @@ USER speedtest
 
 WORKDIR /usr/src/app
 
-COPY requirements.txt .
+COPY app .
 
 RUN pip3 install --no-cache-dir -r requirements.txt
-
-COPY speedtest.py .
-
-COPY VERSION /
 
 CMD ["python", "-u", "./speedtest.py"]
