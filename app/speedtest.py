@@ -21,6 +21,7 @@ influxdb_org = os.getenv("INFLUXDB_ORG", "-")
 influxdb_db = os.getenv("INFLUXDB_DB")
 sleepy_time = int(os.getenv("SLEEPY_TIME", 3600))
 sleepy_time_random = bool(os.getenv("SLEEPY_TIME_RANDOM", False))
+sleepy_time_do = int("0")
 start_time = datetime.datetime.utcnow().isoformat()
 default_hostname = socket.gethostname()
 hostname = os.getenv("SPEEDTEST_HOST", default_hostname)
@@ -111,15 +112,17 @@ def speedtest():
     if sleepy_time_random is True:
         sleepy_time_start = sleepy_time * 0.2
         sleepy_time_end = sleepy_time * 1.2
-        sleepy_time = random.randint(sleepy_time_start, sleepy_time_end)
-    print("STATE: Sleeping for", sleepy_time, "seconds")
-    time.sleep(sleepy_time)
+        sleepy_time_do = random.randint(sleepy_time_start, sleepy_time_end)
+    else:
+        sleepy_time_do = sleepy_time
+    print("STATE: Sleeping for", sleepy_time_do, "seconds")
+    time.sleep(sleepy_time_do)
 
 
 # Some logging
 print("#####\nScript starting!\n#####")
 print("STATE: Starting at", start_time)
-print("STATE: Sleep time between runs set to", sleepy_time, "seconds")
+print("STATE: Sleep time between runs set to", sleepy_time_do, "seconds")
 
 # Check if variables are set
 print("STATE: Checking environment variables...")
